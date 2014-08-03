@@ -7,11 +7,13 @@
 void palin(char *str) {
 	if(*str != '\0')
 		palin(str + 1);
-	putchar(*str);
+	printf("%c", *str);
 }
 
 
 int main(int argc, char *argv[]) {
-	palin("hello word!");
+	char str[100];
+	scanf("%s", str);
+	palin(str);
 	return 0;
 }
