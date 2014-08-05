@@ -11,7 +11,7 @@ int gcd1(int a, int b) {
 
 int gcd2(int a, int b) {
 	if(b == 0) return a;
-	else return gcd2(a, a % b);
+	else return gcd2(b, a % b);
 }
 
 int gcd3(int a, int b) {
@@ -26,7 +26,7 @@ int gcd3(int a, int b) {
 int main() {
 	int a, b;
 	printf("Enter two number: \n");
-	while (scanf("%d%d", &a, &b) != EOF) {
+	while (scanf("%d%d", &a, &b) == 2) {
 		if(a == 0 || b == 0) 
 			break;
 		printf("gcd1: %d\n", gcd1(a, b));
