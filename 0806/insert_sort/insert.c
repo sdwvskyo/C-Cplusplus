@@ -1,24 +1,4 @@
-//heap sort
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-#define N 20
-
-void insertSort(int ar[], int n);
-void creat(int ar[], int n);
-void print(int ar[], int n);
-
-int main(int argc, char *argv[]) {
-	srand(time(NULL));
-	int ar[N];
-	creat(ar, N);
-	print(ar, N);
-	insertSort(ar, N);
-	print(ar, N);
-	return 0;
-}
+#include "insert.h"
 
 void insertSort(int ar[], int n) {
 	int key;

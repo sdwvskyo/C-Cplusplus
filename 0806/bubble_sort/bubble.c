@@ -1,38 +1,4 @@
-//用两种方法实现冒泡排序
-
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-
-#define N 20
-
-void bubble1(int ar[], int n); //单向冒泡
-void bubble2(int ar[], int n); //双向冒泡 
-void creat(int ar[], int n); //创建数组
-void print(int ar[], int n); //打印数组
-void swap(int *a, int *b);
-
-int swapCnt = 0;
-int cmpCnt = 0;
-
-int main(int argc, char *argv[]) {
-	srand(time(NULL));
-	int ar[N];
-
-	//单向冒泡
-	creat(ar, N);
-	print(ar, N);
-	bubble1(ar, N);
-	print(ar, N);
-
-	//双向冒泡
-	creat(ar, N);
-	print(ar, N);
-	bubble2(ar, N);
-	print(ar, N);
-
-	return 0;
-}
+#include "bubble.h"
 
 void bubble2(int ar[], int n) {
 	int start = 0;
