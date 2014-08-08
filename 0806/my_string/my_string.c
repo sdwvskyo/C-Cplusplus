@@ -144,7 +144,7 @@ void word_split(const char *str)
 		} else {
 			putchar(*str);
 			if (word == 0) {
-	word = 1;
+				word = 1;
 			}
 		}
 		str++;
@@ -177,6 +177,30 @@ void delete_space(char *str)
 	puts(str);
 }
 
+void str_replace(char *str, const char *rpl)
+{
+	int index = 0;
+	int space_cnt = 0;
+	while (str[index] != '\0') {
+		if (my_isspace(str[index])) {
+			space_cnt++;
+		}
+		index++;
+	}
+	int end = index + 3 * space_cnt;
+	str[end + 1] = '\0';
+	while (index >= 0 && end >= 0) {
+		if (my_isspace(str[index])) {
+			for (int i = 3; i >= 0; i--) {
+				str[end--] = rpl[i];
+			}
+		} else {
+			str[end--] = str[index];
+		}
+		index--;
+	}
+}
+
 
 void replace_space(const char *str, const char *rpl)
 {
@@ -196,18 +220,20 @@ void replace_space(const char *str, const char *rpl)
 	puts(ar);
 }
 
+
 void rever_word(char *str) 
 {
-	int index = 0;
-	char *p = str;
-	while (*p++ != '\0') {
-		index++;
-	}
-	rever_str(str, 0, index - 1);
+	int start = 0;
+	int end = 0;
+	while (str[++end] != '\0')
+		;
+	while(my_isspace(str[--end]))
+		;
+	rever_str(str, 0, end);
+	str[end + 1] = '\0';
 
 	int word = 0;
-	int start = 0;
-	int end =0;
+	end =0;
 	while (str[end] != '\0') {
 		if (my_isspace(str[end])) {
 			if (word == 1) {
@@ -219,9 +245,6 @@ void rever_word(char *str)
 				start = end;
 			}
 		end++;
-	}
-	if (!my_isspace(str[end])) {
-		rever_str(str, start, end - 1);
 	}
 	puts(str);
 }

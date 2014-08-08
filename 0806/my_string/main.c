@@ -7,19 +7,22 @@ int main(int argc, char *argv[])
 	char str[N];
 	gets(str);
 	int num = word_cnt(str);
-	printf("word =  %d\n", num);
-	puts("Replace space by %020: ");
-	replace_space(str, "%020");
+	//printf("word =  %d\n", num);
+	//puts("Replace space by %020: ");
+	//str_replace(str, "%020");
+	//puts(str);
+
+	//replace_space(str, "%020");
 	//printf("Delete space:\n");
 	//delete_space(str);
 	//puts("List every word:");
 	//word_split(str);
 
-	//puts("Reversal :");
-	//rever_word(str);
+	puts("Reversal :");
+	rever_word(str);
 
-	puts("Sort word: ");
-	sort_str(str);
+	//puts("Sort word: ");
+	//sort_str(str);
 	/*
 	srand(time(NULL));
 	char a[N];

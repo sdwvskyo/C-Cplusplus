@@ -31,4 +31,7 @@ void replace_space(const char *str, const char *rpl);
 void rever_word(char *str);
 
 void sort_str(const char *str);
+
+void str_replace(char *str, const char *rpl);
+
 #endif
