@@ -19,32 +19,44 @@ int main(int argc, char *argv[])
 	printLinkList(L);
 
 */
+	int n;
 	printf("Sort init:\n");
 	for (int i = 0; i < 10; i++) {
-		insertLinkListSort(&L, rand() % 1000);
+		scanf("%d", &n);
+		insertLinkListSort(&L, n);
 	}
 
 	printf("Sort init:\n");
 	for (int i = 0; i < 10; i++) {
-		insertLinkListSort(&Q, rand() % 1000);
+		scanf("%d", &n);
+		insertLinkListSort(&Q, n);
 	}
 
 	printLinkList(L);
 	printLinkList(Q);
-	mergeLinkList(&L, Q);
-	printLinkList(L);
-	Node *p = L;
-	while (p->next != NULL) {
-		p = p->next; 
-	}
-	p->next = L->next;
-	printf("here\n");
+	printf("xiangjiaodian: %d.\n", intersectItem(L, Q));
+//	if (isIntersect(L, Q)) {
+//		printf("Is Intersect.\n");
+//	} else {
+//		printf("is not intersect.\n");
+//	}
+//	printf("Delete recur item:\n");
+//	deleteRecurItem(L);
+//	printLinkList(L);
 
-	if (isCircle(L)) {
-		printf("L is circle!\n");
-	} else {
-		printf("L is not a circle.\n");
-	}
+	//mergeLinkList(&L, Q);
+	//printLinkList(L);
+	//Node *p = L;
+	//while (p->next != NULL) {
+	//	p = p->next; 
+	//}
+//	p->next = L;
+
+	//if (isCircle(L)) {
+	//	printf("L is circle!\n");
+	//} else {
+	//	printf("L is not a circle.\n");
+	//}
 	//printf("mid元素: %d\n", seekMidItem(L));
 	//reversalLinkList(&L);
 	//int n;

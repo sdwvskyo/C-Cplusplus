@@ -277,21 +277,111 @@ int isCircle(LinkList L)
 		return -1;
 	}
 	Node *p = L;
-	while (p != NULL) {
-		Node *q = p;
-		while (q != NULL) {
-			if (q->next == p) {
-				return 1;
-			}
-			q = q->next;
+	Node *q = L;
+	while (p->next != NULL) {
+		p = p->next;
+		if (q == p) {
+			return 1;
 		}
 		p = p->next;
+		if (q == p) {
+			return 1;
+		} else if (p == NULL) {
+			return 0;
+		}
+		q = q->next;
 	}
 	return 0;
 }
 
 //判断两个单链表是否相交
+int isIntersect(LinkList L1, LinkList L2)
+{
+	Node *p1 = L1;
+	int flag = 0;
+	while (p1 != NULL) {
+		Node *p2 = L2;
+		Node *tmp = p1;
+		while (p2 != NULL && tmp != NULL) {
+			if (tmp->data == p2->data) {
+				flag = 1;
+				tmp = tmp->next;
+			} else {
+				if (flag == 1) {
+					flag = 0;
+					break;
+				}
+				flag = 0;
+			}
+			p2 = p2->next;
+		}
+		if (p2 == NULL && flag == 1) {
+			break;
+		} else {
+			p1 = p1->next;
+		}
+	}
+	return flag;
+}
+
+
 //两个单链表相交，计算相交点
+int intersectItem(LinkList L1, LinkList L2)
+{
+	Node *p1 = L1;
+	int flag = 0;
+	Item n = -1;
+	while (p1 != NULL) {
+		Node *p2 = L2;
+		Node *tmp = p1;
+		while (p2 != NULL && tmp != NULL) {
+			if (tmp->data == p2->data) {
+				if (flag == 0) {
+					n = tmp->data;
+				}
+				flag = 1;
+				tmp = tmp->next;
+			} else {
+				if (flag == 1) {
+					flag = 0;
+					n = -1;
+					break;
+				}
+				n = -1;
+				flag = 0;
+			}
+			p2 = p2->next;
+		}
+		if (p2 == NULL && flag == 1) {
+		   	break;
+		} else {
+			p1 = p1->next;
+		}
+	}
+	return n;
+}
+
 
 //删除单链表中的重复元素
+void deleteRecurItem(LinkList L) {
+	if (L == NULL) {
+		printf("Empty LinkList.\n");
+		return;
+	}
+	Node *p = L;
+	while (p != NULL) {
+		Node *tmp = p->next;
+		while(tmp != NULL) {
+			if (p->data == tmp->data) {
+				p->next = tmp->next;
+				Node *q = tmp;
+				tmp = tmp->next;
+				free(q);
+			} else {
+				tmp = tmp->next;
+			}
+		}
+		p = p->next;
+	}
+}
 

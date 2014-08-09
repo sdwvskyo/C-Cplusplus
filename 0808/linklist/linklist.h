@@ -38,5 +38,12 @@ Item seekMidItem(LinkList L);
 void mergeLinkList(LinkList *L1, LinkList L2);
 
 int isCircle(LinkList L);
+
+int isIntersect(LinkList L1, LinkList L2);
+
+void deleteRecurItem(LinkList L);
+
+int intersectItem(LinkList L1, LinkList L2);
+
 #endif
 
