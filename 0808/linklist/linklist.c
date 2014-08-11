@@ -7,7 +7,7 @@ void initLinkListTail(LinkList *L, int n)
 	Node *ptail = *L; 
 	int i;
 	for (i = 0; i < n; i++) {
-		pnew = (Node *)calloc(1, sizeof(Node));
+	    	pnew = (Node *)calloc(1, sizeof(Node));
 		if (pnew == NULL) {
 			printf("get memory failure!\n");
 			return;
@@ -384,4 +384,4 @@ void deleteRecurItem(LinkList L) {
 		p = p->next;
 	}
 }
-
+	
