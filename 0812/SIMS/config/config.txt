@@ -1,0 +1,2 @@
+account.txt		./config/account.txt
+student.txt		./config/student.txt

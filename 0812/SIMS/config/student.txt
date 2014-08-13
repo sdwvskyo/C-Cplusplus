@@ -1,0 +1,4 @@
+3    zhaoxiaosong    3   66.00
+10   wangwu          1   77.00
+99   suyi            1   100.00
+567  dwq             2   100.00
