@@ -35,7 +35,7 @@ void sortByFreq(pNode *pHead)
 //按单词顺序初始化链表
 void sortByWordOder(char *filename, pNode *L)
 {
-	FILE *fp = fopen("The_Holy_Bible.txt", "r");
+	FILE *fp = fopen(filename, "r");
 	if (fp == NULL) {
 		perror("Open file error.\n");
 		return;

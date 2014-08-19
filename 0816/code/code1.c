@@ -9,15 +9,18 @@
 #include <string.h>
 
 #define N 1024
+int str_str(char *src, char *dst);
+void str_sub(char *src, char *dst, int index, int len);
+int longest_dupstr(char *src, char *dst);
 
 int main(int argc, char *argv[])
 {
 	char src[N];
 	char dst[N];
 	printf("input: \n");
-	scanf("%s", src);
+	fgets(src, N, stdin);
 	int times = longest_dupstr(src, dst);
-	printf("longest_dupstr : \n times: %d", dst, times);
+	printf("longest_dupstr : %s\n times: %d\n", dst, times);
 	
 	return 0;
 }
@@ -27,18 +30,17 @@ int longest_dupstr(char *src, char *dst)
 	int cnt = 0;
 	int index;
 	int times;
+	int pos;
 	for (index = 0; index < strlen(src); index++) {
-		for ()
-		str_sub(src, dst, index, strlen(src) - index);
-		cnt = str_str(str, dst);
-
-		if (cnt >= 2) {
-			return cnt;
-		} else {
-			cnt = 0
+		for (pos = 0; pos <= index; pos++) {
+			str_sub(src, dst, pos, strlen(src) - index);
+			cnt = str_str(src, dst);
+			if (cnt >= 2) {
+				return cnt;
+			}
 		}
 	}
-	return cnt;
+	return 0;
 }
 
 void str_sub(char *src, char *dst, int index, int len)
@@ -50,4 +52,16 @@ void str_sub(char *src, char *dst, int index, int len)
 	dst[i] = '\0';
 }
 
-
+int str_str(char *src, char *dst)
+{
+	int cnt = 0;
+	int index = 0;
+	char tmp[N];
+	for (index = 0; index < strlen(src) - strlen(dst); index++) {
+		str_sub(src, tmp, index, strlen(dst));
+		if (strcmp(tmp, dst) == 0) {
+			cnt++;
+		}
+	}
+	return cnt;
+}
