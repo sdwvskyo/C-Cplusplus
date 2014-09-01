@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 20
+#define N 2000000
 
 void creat(int ar[], int n);
 void print(int ar[], int n);
@@ -60,12 +60,12 @@ void merge(int ar[], int start, int mid, int end) {
 
 void creat(int ar[], int n) {
 	for (int i = 0; i < n; i++)
-		ar[i] = rand() % 100;
+		ar[i] = rand() % 100000;
 }
 
 void print(int ar[], int n) {
 	for (int i = 0; i < n; i++) {
-		printf("%-3d", ar[i]);
+		printf("%-8d", ar[i]);
 	}
 	printf("\n");
 }

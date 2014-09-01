@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define N 20
+#define N 2000000
 
 void heapAdjust(int ar[], int start, int end);
 void heapSort(int ar[], int n);
@@ -55,11 +55,11 @@ void swap(int *a, int *b) {
 }
 void creat(int ar[], int n) {
 	for(int i = 1; i < n; i++)
-		ar[i] = rand() % 100;
+		ar[i] = rand() % 100000;
 }
 
 void print(int ar[], int n) {
 	for (int i = 1; i < n; i++) 
-		printf("%-3d", ar[i]);
+		printf("%-8d", ar[i]);
 	printf("\n");
 }
