@@ -2,10 +2,10 @@
 
 void travelChilds(Child *childs, int childs_len, fd_set *set)
 {
-	char buf[N];
+	int val;
 	for (int i = 0; i < childs_len; i++) {
 		if (FD_ISSET(childs[i].sfd, set)) {
-			recv(childs[i].sfd, buf, N, 0);
+			read(childs[i].sfd, &val, 4);
 			childs[i].state = IDLE;
 		}
 	}
@@ -29,9 +29,9 @@ Child * initChilds(int len)
 		perror("calloc");
 		exit(EXIT_FAILURE);
 	}
-	pid_t pid;
 	for (int i = 0; i < len; i++) {
 		int sfd_pair[2];
+		pid_t pid;
 		if (socketpair(AF_LOCAL, SOCK_STREAM, 0, sfd_pair) < 0) {
 			perror("socketpair");
 			exit(EXIT_FAILURE);
@@ -61,20 +61,34 @@ static void toUpper(char *str)
 			*str -= 32;
 		}
 		str++;
+		printf("to upper\n");
 	}
 }
 
 void work(int sfd)
 {
-	char buf[N];
+	int sfd_client;
+	pid_t pid = getpid();
 	while (1) {
-		int sfd_client = recv_fd(sfd);
-		while (memset(buf, 0, N), recv(sfd_client, buf, N, 0)) {
-			toUpper(buf);
-			send(sfd_client, buf, strlen(buf), 0);
-		}
-		send(sfd, buf, strlen(buf), 0);
+		recv_fd(sfd, &sfd_client);
+		handler(sfd_client);
+		write(sfd, &pid, sizeof(pid));
 	}
+}
+
+void handler(int sfd)
+{
+	Msg msg;
+	int recvn;
+	while (1) {
+		memset(&msg, 0, sizeof(Msg));
+		recvn = recvTcp(sfd, &msg, 4);
+		if (recvn == 0)
+			break;
+		recvTcp(sfd, msg.buf, msg.len);
+		sendTcp(sfd, &msg, msg.len + 4);
+	}
+
 }
 
 void send_fd(int sfd, int fd_file)
@@ -88,7 +102,7 @@ void send_fd(int sfd, int fd_file)
 	char buf[32] = "hello world!\n";
 	struct iovec bufs[1];
 	bufs[0].iov_base = buf;
-	bufs[0].iov_len = 32;
+	bufs[0].iov_len = strlen(buf);
 
 	cmsg->cmsg_len = CMSG_LEN(sizeof(int));
 	cmsg->cmsg_level = SOL_SOCKET;
@@ -102,37 +116,39 @@ void send_fd(int sfd, int fd_file)
 	msg->msg_control = cmsg;
 	msg->msg_controllen = cmsg->cmsg_len;
 	msg->msg_flags = 0;
-	if (sendmsg(sfd, msg, 0) < 0) {
+	int sendn = sendmsg(sfd, msg, 0);
+	if (sendn < 0) {
 		perror("sednmsg");
 		exit(EXIT_FAILURE);
 	}
+	printf("send len: %d\n", sendn);
 }
 
-int recv_fd(int sfd)
+void recv_fd(int sfd, int *fd_file)
 {
-	int fd_file;
 	struct msghdr *msg = (struct msghdr *)calloc(1, sizeof(struct msghdr));
 	struct cmsghdr *cmsg = (struct cmsghdr *)calloc(1, CMSG_LEN(sizeof(int)));
 	if (msg == NULL || cmsg == NULL) {
 		perror("calloc");
 		exit(EXIT_FAILURE);
 	}
-	char buf1[6] = "";
-	char buf2[15] = "";
-	struct iovec bufs[2];
+	char buf1[32] = "";
+	struct iovec bufs[1];
 	bufs[0].iov_base = buf1;
-	bufs[0].iov_len = 6;
-	bufs[1].iov_base = buf2;
-	bufs[1].iov_len = 15;
+	bufs[0].iov_len = 31;
 
 	msg->msg_name = NULL;
 	msg->msg_namelen = 0;
 	msg->msg_iov = bufs;
-	msg->msg_iovlen = 2;
+	msg->msg_iovlen = 1;
 	msg->msg_flags = 0;
 	msg->msg_control = cmsg;
 	msg->msg_controllen = CMSG_LEN(sizeof(int));
-	recvmsg(sfd, msg, 0);
-	fd_file = *(int *)CMSG_DATA((struct cmsghdr *)msg->msg_control);
-	return fd_file;
+	int recvn = recvmsg(sfd, msg, 0);
+	if (recvn < 0) {
+		perror("recvmsg");
+		exit(EXIT_FAILURE);
+	}
+	*fd_file = *(int *)CMSG_DATA((struct cmsghdr *)msg->msg_control);
+	printf("buf1: %s, recv len: %d\n", buf1, recvn);
 }

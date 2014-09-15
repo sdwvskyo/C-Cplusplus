@@ -29,13 +29,14 @@ int main(int argc, char *argv[])
 	tm.tv_sec = 0;
 	tm.tv_usec = 1000;
 	int res = 0;
-	int sfd_client = 0;
+	int sfd_client;
 	while (1) {
 		set = back;
 		res = select(N, &set, NULL, NULL, &tm);
 		if (res == 0) {
 			continue;
-		} else if (res == -1) {
+		} 
+		if (res == -1) {
 			if (errno == EINTR) {
 				continue;
 			} else {
@@ -45,17 +46,8 @@ int main(int argc, char *argv[])
 		}
 		if (FD_ISSET(sfd_server, &set)) {
 			sfd_client = accept(sfd_server, NULL, NULL);
-			if (sfd_client <= 0) {
-				if (errno == EINTR) {
-					continue;
-				} else {
-					perror("accept");
-					exit(EXIT_FAILURE);
-				}
-			} else {
-				assignTask(childs, childs_len, sfd_client);
-				close(sfd_client);
-			}
+			assignTask(childs, childs_len, sfd_client);
+			close(sfd_client);
 		}
 		travelChilds(childs, childs_len, &set);
 	}

@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 		exit(1);
 	}
 	//make and open fifo from argv[1]
-	if (access("1.fifo", F_OK) == -1) {
+	if (access(argv[1], F_OK) == -1) {
 		if (mkfifo(argv[1], 0666) != 0) {
 			perror("mkfio");
 			exit(1);

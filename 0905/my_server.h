@@ -25,6 +25,12 @@
 #define IDLE 0
 
 #define N 1024
+#define MSG_SIZE N - 4
+
+typedef struct msg {
+	int len;
+	char buf[MSG_SIZE];
+} Msg;
 
 typedef struct child {
 	int state;
@@ -34,9 +40,10 @@ typedef struct child {
 
 Child * initChilds(int len);
 void send_fd(int sfd, int fd_file);
-int recv_fd(int sfd);
+void recv_fd(int sfd, int *filename);
 void assignTask(Child *childs, int childs_len, int sfd);
 void travelChilds(Child *childs, int childs_len, fd_set *set);
 void work(int sfd);
+void handler(int sfd);
 
 #endif
