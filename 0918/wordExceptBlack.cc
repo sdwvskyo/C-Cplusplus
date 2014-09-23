@@ -26,9 +26,10 @@ double sortByFrequency(vector<Word> &words);
 double printWords(const vector<Word> &words);
 void erasePunct(string &s);
 bool cmp(const Word &a, const Word &b);
-bool isInBlackFile(const vector<string> vec, const string &s);
+bool isInBlackFile(const vector<string> &vec, const string &s);
 void addWord(vector<Word> &words, const string &s);
 double getTime();
+bool binarySearch(const vector<string> &vec, const string &s);
 
 int main(int argc, const char *argv[])
 {
@@ -65,9 +66,8 @@ double readFile(const char *filename1, const char *filename2, vector<Word> &word
 
 	while (infile >> s) {
 		erasePunct(s);
-		if (isInBlackFile(blackWords, s))
-			continue;
-		addWord(words, s);
+		if (!isInBlackFile(blackWords, s))
+			addWord(words, s);
 	}
 	infile.close();
 	double timeEnd = getTime();
@@ -75,14 +75,28 @@ double readFile(const char *filename1, const char *filename2, vector<Word> &word
 	return time;
 }
 
-bool isInBlackFile(const vector<string> vec, const string &s)
+bool isInBlackFile(const vector<string> &vec, const string &s)
 {
-	for(vector<string>::const_iterator it = vec.begin(); it != vec.end(); ++it){
-		if (*it == s)
+	return binarySearch(vec, s);
+}
+
+bool binarySearch(const vector<string> &vec, const string &s)
+{
+	int begin = 0;
+	int end = vec.size() - 1;
+	int mid;
+	while (begin <= end) {
+		mid = (begin + end) / 2;
+		if (vec[mid] == s)
 			return true;
+		else if (vec[mid] < s)
+			begin = mid + 1;
+		else 
+			end = mid - 1;
 	}
 	return false;
 }
+
 
 void addWord(vector<Word> &words, const string &s)
 {
