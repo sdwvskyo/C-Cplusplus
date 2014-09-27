@@ -25,19 +25,23 @@ void sortByFrequency(vector<Word> &words);
 void printWords(const vector<Word> &words);
 void erasePunct(string &s);
 bool cmp(const Word &a, const Word &b);
+double gettime();
 
 int main(int argc, const char *argv[])
 {
 	if (argc != 2) 
 		throw runtime_error("argument less");
+	
+
 
 	vector<Word> words;
 
 	readFile(argv[1], words);
 
 	sortByFrequency(words);
-
+	
 	printWords(words);
+	
 	return 0;
 }
 
@@ -95,4 +99,14 @@ void erasePunct(string &s)
 		else 
 			++it;
 	}
+}
+
+double gettime()
+{
+	timeval tm;
+	memset(&tm, 0, sizeof tm);
+	gettimeofday(&tm, NULL);
+	double result = 0.0;
+	result += (tm.tv_sec + tm.tv_usec / (double)1000000);
+	return result;
 }

@@ -1,4 +1,10 @@
 *.o
 *.out
 *.txt
+swp
+*~
+.DS_Store
+Thumbs.db
+.project
+.svn
 core

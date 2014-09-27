@@ -1,4 +1,5 @@
-#include "myvector.h"
+#ifndef MYVECTOR_HPP_
+#define MYVECTOR_HPP_ 
 
 template <typename ElemType>
 MyVector<ElemType>::MyVector()
@@ -68,3 +69,5 @@ void MyVector<ElemType>::doubleSpace()
 	numAllocated *= 2;
 }
 
+
+#endif  /*MYVECTOR_HPP_*/

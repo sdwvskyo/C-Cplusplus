@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-template <typename Elemtype>
+template <class Elemtype>
 class MyStack
 {
 public:
