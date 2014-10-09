@@ -1,6 +1,7 @@
 C
 =
 
-##Learning C notes
+#Some C & C++ code
 
 *To record some examples in learning C && C++ language.*
+
