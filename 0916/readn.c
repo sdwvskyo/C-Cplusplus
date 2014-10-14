@@ -26,7 +26,7 @@ size_t readn(int fd, void *buf, size_t count)
 			if (errno == EINTR) 
 				continue;
 			else 
-				return -a;
+				return -1;
 		}
 		nleft -= nread;
 		bufp += nread;
